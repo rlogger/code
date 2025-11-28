@@ -11,6 +11,7 @@ mkShell {
   shellHook = ''
     # Optionally: upgrade pip and install pyflyby in the local environment
     pip install --user pyflyby
+    pip install --user labml-nn
 
     # Download custom nvim config
     export NVIM_CONFIG_DIR="$HOME/.config/nvim-nix-shell"
