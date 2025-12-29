@@ -2,6 +2,7 @@ def pyramidTransition(bottom, allowed):
     # Build a mapping: (left, right) -> list of possible top blocks
     patterns = {}
     
+    # add pattern to the list
     for pattern in allowed:
         left, right, top = pattern[0], pattern[1], pattern[2]
         key = (left, right)
