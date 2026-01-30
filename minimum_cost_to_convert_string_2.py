@@ -1,4 +1,4 @@
-'''
+"""
 You are given two 0-indexed strings source and target, both of length n and consisting of lowercase English characters. You are also given two 0-indexed string arrays original and changed, and an integer array cost, where cost[i] represents the cost of converting the string original[i] to the string changed[i].
 
 You start with the string source. In one operation, you can pick a substring x from the string, and change it to y at a cost of z if there exists any index j such that cost[j] == z, original[j] == x, and changed[j] == y. You are allowed to do any number of operations, but any pair of operations must satisfy either of these two conditions:
@@ -8,7 +8,8 @@ The substrings picked in the operations are source[a..b] and source[c..d] with a
 Return the minimum cost to convert the string source to the string target using any number of operations. If it is impossible to convert source to target, return -1.
 
 Note that there may exist indices i, j such that original[j] == original[i] and changed[j] == changed[i].
-'''
+"""
+
 
 class TrieNode:
     def __init__(self):
@@ -17,7 +18,14 @@ class TrieNode:
 
 
 class Solution:
-    def minimumCost(self, source: str, target: str, original: list[str], changed: list[str], cost: list[int]) -> int:
+    def minimumCost(
+        self,
+        source: str,
+        target: str,
+        original: list[str],
+        changed: list[str],
+        cost: list[int],
+    ) -> int:
         # Step 1: Build trie and assign IDs to unique strings
         root = TrieNode()
         str_to_id = {}
@@ -47,7 +55,7 @@ class Solution:
         num_strings = len(str_to_id)
 
         # Step 2: Floyd-Warshall to find min cost between any two strings
-        INF = float('inf')
+        INF = float("inf")
         dist = [[INF] * num_strings for _ in range(num_strings)]
 
         # Self-conversion costs 0
@@ -93,7 +101,10 @@ class Solution:
                 tgt_char = target[j]
 
                 # Both substrings must exist in trie
-                if src_char not in src_node.children or tgt_char not in tgt_node.children:
+                if (
+                    src_char not in src_node.children
+                    or tgt_char not in tgt_node.children
+                ):
                     break
 
                 src_node = src_node.children[src_char]
@@ -106,4 +117,3 @@ class Solution:
                         dp[j + 1] = min(dp[j + 1], dp[i] + conversion_cost)
 
         return dp[n] if dp[n] != INF else -1
-
